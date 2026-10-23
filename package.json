@@ -1,0 +1,7 @@
+{
+  "name": "smart-hosting-panel",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "python main.py"
+  }
+}
