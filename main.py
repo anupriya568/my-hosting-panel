@@ -4,7 +4,7 @@ import psutil
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 
-TOKEN = "8981130136:AAHqOQ6HpohSJJel3o3I-kWjgdry0JqtpA8"
+TOKEN = "8981130136:AAEgqd1m62AeJfWtauxq5Z5HYmDI207lMdA"
 ADMIN_ID = 8870766171
 
 BOT_FOLDER = "hosted_bots"
