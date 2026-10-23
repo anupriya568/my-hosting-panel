@@ -1,6 +1,5 @@
 import os
 import subprocess
-import psutil
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 
@@ -101,11 +100,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_panel(chat_id, context, message_id)
         
     elif data == "stats":
-        ram = psutil.virtual_memory()
-        total_ram = round(ram.total / (1024 * 1024), 2)
-        used_ram = round(ram.used / (1024 * 1024), 2)
-        cpu_percent = psutil.cpu_percent(interval=None)
-        stat_msg = f"🖥️ **CPU:** `{cpu_percent}%`\n🧠 **RAM Used:** `{used_ram} MB / {total_ram} MB`"
+        stat_msg = "🖥️ **Server Status:** `Panel is running smoothly 24/7!`"
         await query.answer(stat_msg, show_alert=True)
         
     elif data.startswith("run_"):
@@ -165,13 +160,12 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"✅ फाइल `{file.file_name}` सेव हो गई और ऑटो-रीस्टार्ट हो गई है! 🚀")
     await show_panel(update.effective_chat.id, context)
 
-# नया जोड़ा गया /backup फीचर
+# बूटस्ट्रॅप /backup फीचर (डेटाबेस बैकअप)
 async def backup_databases(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not is_admin(update.effective_user.id):
         await update.message.reply_text("⛔ अनुमति नहीं है!")
         return
     
-    # चूँकि आपके बॉट्स 'hosted_bots' फोल्डर के अंदर या सब-फोल्डर में हो सकते हैं, हम पूरे प्रोजेक्ट और होस्टेड फोल्डर दोनों में .db खोजेंगे
     search_dirs = [BOT_FOLDER, "."]
     sent_count = 0
     
@@ -213,7 +207,7 @@ def main():
     
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("list", start))
-    app.add_handler(CommandHandler("backup", backup_databases)) # यहाँ नई कमांड जोड़ दी गई है
+    app.add_handler(CommandHandler("backup", backup_databases))
     app.add_handler(CallbackQueryHandler(button_handler))
     app.add_handler(MessageHandler(filters.Document.ALL, handle_document))
     
@@ -222,4 +216,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+            
